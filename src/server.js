@@ -14,7 +14,7 @@ const clothesRoutes = require('./routes/clothes.js');
 const userRoutes = require('./routes/user.js');
 
 // STRETCH GOAL
-const v1Routes = require('./routes/v1.js');
+// const v1Routes = require('./routes/v1.js');
 
 const app = express();
 
@@ -27,8 +27,8 @@ app.use(logger);
 // Use our routes from the routing module...
 app.use(foodRoutes);
 app.use(clothesRoutes);
-app.use(userRoutes);
 app.use(authRoutes);
+app.use(userRoutes);
 
 // STRETCH GOAL
 // app.use('/api/v1', v1Routes);

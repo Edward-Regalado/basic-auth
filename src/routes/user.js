@@ -39,11 +39,18 @@ async function getOneUsers(req, res) {
 
 async function createUsers(req, res) {
     try {
-        let record = req.body;
-        let newUser = await usersCollection.create(record);
-        res.status(200).json(newUser);
+        const record = req.body;
+        const newUser = await usersCollection.create(record);
+        res.status(201).json(newUser);
+        console.log(`user created successfully ${record.username}`);
+        // }
     } catch (error) {
-        console.log(error);
+        if(error.name === 'SequelizeUniqueConstraintError') {
+            res.status(500).send('user already exists');
+            // console.log(error);
+        } else {
+            res.status(500).send("Some else failed on the backend!");
+        }
     }
 }
 

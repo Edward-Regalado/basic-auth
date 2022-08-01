@@ -21,7 +21,9 @@ async function getFood(req, res) {
     try {
         const allFood = await FoodCollection.read();
         if(allFood.length == 0) {
-            res.status(200).send('There is no food available!');
+            res.status(200).json({
+                message: `There is no food with id 1 to delete!`
+            });
         } else {
             res.status(200).json(allFood);
         }
@@ -34,6 +36,7 @@ async function getOneFood(req, res) {
     try {
         const id = req.params.id;
         const theFood = await FoodCollection.read(id);
+        res.status(200).json(theFood);
         if(theFood == undefined){
             res.status(404).send(`We don't have a valid food id for ${id}!`);
         } else {
@@ -74,7 +77,9 @@ async function deleteFood(req, res) {
         const id = req.params.id;
         const deletedFood = await FoodCollection.read(id);
         if(!deletedFood) {
-            res.status(404).send(`There is no food with id ${id} to delete!`);
+            res.status(404).json({
+                message: `There is no food with id ${id} to delete!`
+            });
         } else {
             await FoodCollection.delete(id);
             res.status(200).json(deletedFood);

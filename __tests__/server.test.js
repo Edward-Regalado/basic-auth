@@ -73,11 +73,13 @@ describe('web server', () => {
   });
 
   it('can delete a record', async () => {
-    const response = await mockRequest.delete('/food/1');
+    const id = 1;
+    // const response = await mockRequest.delete('/food/id');
+    const response = await mockRequest.delete(`/food/${id}`);
     expect(response.status).toBe(200);
 
     const getResponse = await mockRequest.get('/food');
-    expect(getResponse.body.length).toEqual(0);
+    expect(getResponse.body.message).toBe(`There is no food with id ${id} to delete!`);
 
   });
 

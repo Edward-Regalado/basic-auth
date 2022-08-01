@@ -15,7 +15,7 @@ describe('web server authentication', () => {
     const response = await mockRequest
       .post('/signup')
       .send({ username: 'test user', password: 'test password' });
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(201);
     expect(response.body.username).toEqual('test user');
 
     expect(response.body.password.startsWith('$2b$10$')).toBe(true);
@@ -47,7 +47,7 @@ describe('web server authentication', () => {
     const res1 = await mockRequest
       .post('/signup')
       .send({ username: 'test user', password: 'test password' });
-    expect(res1.status).toBe(200);
+    expect(res1.status).toBe(201);
 
     const response = await mockRequest
       .post('/signup')
