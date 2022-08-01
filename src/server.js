@@ -7,9 +7,11 @@ const express = require('express');
 const notFoundHandler = require('./error-handlers/404.js');
 const errorHandler = require('./error-handlers/500.js');
 const logger = require('./middleware/logger.js');
+const authRoutes = require('./middleware/auth/route.js');
 
 const foodRoutes = require('./routes/food.js');
 const clothesRoutes = require('./routes/clothes.js');
+const userRoutes = require('./routes/user.js');
 
 // STRETCH GOAL
 const v1Routes = require('./routes/v1.js');
@@ -25,6 +27,8 @@ app.use(logger);
 // Use our routes from the routing module...
 app.use(foodRoutes);
 app.use(clothesRoutes);
+app.use(userRoutes);
+app.use(authRoutes);
 
 // STRETCH GOAL
 // app.use('/api/v1', v1Routes);

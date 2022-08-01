@@ -16,9 +16,9 @@
     },
     "rules": {
       "no-console": "off",
-      "indent": [ "error", 4 ],
-      "quotes": ["error", "single", { "allowTemplateLiterals": true }],
-      "comma-dangle": ["error", "always-multiline"],
+      "indent": "off",
+      "quotes": "off",
+      "comma-dangle": "off",
       "semi": [ "error", "always" ],
       "no-unused-vars": [1, {"vars": "local", "args": "none"}]
     }

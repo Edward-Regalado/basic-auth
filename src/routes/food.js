@@ -8,7 +8,8 @@ const FoodCollection = require('../models/index.js').Food;
 
 const router = express.Router();
 
-// RESTful Route Declarations
+// RESTful Route Declarations - these all get exported via router, then we import them in our server.js file and simply use app.use(foodRoutes);
+
 router.get('/food', getFood);
 router.get('/food/:id', getOneFood);
 router.post('/food', createFood);
@@ -17,34 +18,70 @@ router.delete('/food/:id', deleteFood);
 
 // RESTful Route Handlers
 async function getFood(req, res) {
-  let allFood = await FoodCollection.read();
-  res.status(200).json(allFood);
+    try {
+        const allFood = await FoodCollection.read();
+        if(allFood.length == 0) {
+            res.status(200).send('There is no food available!');
+        } else {
+            res.status(200).json(allFood);
+        }
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 async function getOneFood(req, res) {
-  const id = req.params.id;
-  let theFood = await FoodCollection.read(id)
-  res.status(200).json(theFood);
+    try {
+        const id = req.params.id;
+        const theFood = await FoodCollection.read(id);
+        if(theFood == undefined){
+            res.status(404).send(`We don't have a valid food id for ${id}!`);
+        } else {
+            res.status(200).json(theFood);
+        }
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 async function createFood(req, res) {
-  let obj = req.body;
-  let newFood = await FoodCollection.create(obj);
-  res.status(200).json(newFood);
+    try {
+        const record = req.body;
+        const newFood = await FoodCollection.create(record);
+        res.status(200).json(newFood);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 async function updateFood(req, res) {
-  const id = req.params.id;
-  const obj = req.body;
-  let updatedFood = await FoodCollection.update(id, obj)
-  res.status(200).json(updatedFood);
+    try {
+        const id = req.params.id;
+        const record = req.body;
+        const updatedFood = await FoodCollection.update(id, record);
+        if(id != updatedFood.id) {
+          res.status(404).send(`There is no food with id ${id} to update!`);
+        } else {
+            res.status(200).json(updatedFood);
+        }
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 async function deleteFood(req, res) {
-  let id = req.params.id;
-  let deletedFood = await FoodCollection.delete(id);
-  res.status(200).json(deletedFood);
+    try {
+        const id = req.params.id;
+        const deletedFood = await FoodCollection.read(id);
+        if(!deletedFood) {
+            res.status(404).send(`There is no food with id ${id} to delete!`);
+        } else {
+            await FoodCollection.delete(id);
+            res.status(200).json(deletedFood);
+        }
+    } catch (error) {
+        console.log(error);
+    }
 }
-
 
 module.exports = router;
