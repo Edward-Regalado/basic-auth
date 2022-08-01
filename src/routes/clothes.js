@@ -15,34 +15,69 @@ router.delete('/clothes/:id', deleteClothes);
 
 // RESTful Route Handlers
 async function getClothes(req, res) {
-  let allClothes = await clothesCollection.get();
-  res.status(200).json(allClothes);
+    try {
+        const allClothes = await clothesCollection.read();
+        if(allClothes.length == 0) {
+            res.status(200).send('There are no clothes available!');
+        } else {
+            res.status(200).json(allClothes);
+        }
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 async function getOneClothes(req, res) {
-  let id = req.params.id;
-  let theClothes = await clothesCollection.get(id)
-  res.status(200).json(theClothes);
+    try {
+        const id = req.params.id;
+        const theClothes = await clothesCollection.read(id);
+        if(theClothes == undefined) {
+            res.status(404).send(`We don't have a valid clothes id for ${id}`);
+        } else {
+            res.status(200).json(theClothes);
+        }
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 async function createClothes(req, res) {
-  let obj = req.body;
-  let newClothes = await clothesCollection.create(obj);
-  res.status(200).json(newClothes);
+    try {
+        const record = req.body;
+        const newClothes = await clothesCollection.create(record);
+        res.status(200).json(newClothes);
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 async function updateClothes(req, res) {
-  let id = req.params.id;
-  const obj = req.body;
-  let updatedClothes = await clothesCollection.update(id, obj)
-  res.status(200).json(updatedClothes);
+    try {
+        const id = req.params.id;
+        const obj = req.body;
+        const updatedClothes = await clothesCollection.update(id, obj);
+        if(id != updatedClothes.id) {
+            res.status(404).send(`There are no clothes with id ${id} to update!`);
+        } else {
+            res.status(200).json(updatedClothes);
+        }
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 async function deleteClothes(req, res) {
-  let id = req.params.id;
-  let deletedClothes = await clothesCollection.delete(id);
-  res.status(200).json(deletedClothes);
+    try {
+        const id = req.params.id;
+        const deletedClothes = await clothesCollection.delete(id);
+        if(!deletedClothes) {
+            res.status(404).send(`There are no clothes with id ${id} to delete!`);
+        } else {
+            res.status(200).json(deletedClothes);
+        }
+    } catch (error) {
+        console.log(error);
+    }
 }
-
 
 module.exports = router;
