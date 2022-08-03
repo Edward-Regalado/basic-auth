@@ -18,7 +18,9 @@ async function getClothes(req, res) {
     try {
         const allClothes = await clothesCollection.read();
         if(allClothes.length == 0) {
-            res.status(200).send('There are no clothes available!');
+            res.status(200).json({
+                message: 'There are no clothes available!'
+            });
         } else {
             res.status(200).json(allClothes);
         }

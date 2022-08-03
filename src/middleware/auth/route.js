@@ -1,5 +1,4 @@
 const { Users } = require('../../models/index.js');
-const userCollection = require('../../models/index.js');
 const express = require('express');
 const bcrypt = require('bcrypt');
 
@@ -42,6 +41,7 @@ async function singInUser(req, res) {
         const isValid = await bcrypt.compare(req.body.password, user.password);
         if(isValid) {
             res.status(200).send(user);
+            console.log(`${JSON.stringify(user.username)} is validated!`);
             return;
         }
     } catch (error) {
