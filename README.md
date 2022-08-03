@@ -8,7 +8,7 @@
 
 - `.env` requirements:
   - `PORT` = 3000
-  - `DATABASE_URL` = add your heroku link
+  - `DATABASE_URL` = add your heroku postgres link
 - run `npm i` or `npm install` in the terminal to add the required dependencies
 - make sure you have
 

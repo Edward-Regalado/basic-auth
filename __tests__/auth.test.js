@@ -4,7 +4,7 @@ const { server } = require('../src/server.js');
 const { db } = require('../src/models/index.js');
 const supertest = require('supertest');
 const mockRequest = supertest(server);
-// const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 
 describe('web server authentication', () => {
   beforeEach(async () => {

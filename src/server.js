@@ -19,12 +19,14 @@ const userRoutes = require('./routes/user.js');
 const app = express();
 
 // Express Global Middleware
+// this allow us to access json data form the req.body;
 app.use(express.json());
 
-// Our own Global Middleware
+// Using our own Global Middleware - every route has access to these
 app.use(logger);
 
-// Use our routes from the routing module...
+// Use our routes from the routing module.
+// wwe could preface each these routes with app.use('/api/food/', foodRoutes);
 app.use(foodRoutes);
 app.use(clothesRoutes);
 app.use(authRoutes);
