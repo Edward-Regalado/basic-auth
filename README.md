@@ -26,6 +26,23 @@
 - This is going to require more "end-to-end" testing that you've done in the past
   - To test signin, your tests need to create a user first, then try and login, so there's a dependency built-in
 
+
+# LAB: Class 07
+
+## Authorization
+
+
+
+## Tests
+
+- POST to `/signup` to create a new user
+- POST to `/signin` to login as a user (use basic auth)
+- Need tests for auth middleware and the routes
+  - does the middleware function (send it a basic header)
+  - do the routes assert the requirements (signup/signin)
+- This is going to require more "end-to-end" testing that you've done in the past
+  - To test signin, your tests need to create a user first, then try and login, so there's a dependency built-in
+
 ## UML
 
 ![UML](./src/assets/images/UML.PNG)
